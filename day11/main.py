@@ -64,8 +64,8 @@ class Monkey:
         # Increment whenever a monkey inspects a new item
         self.inspects += 1
 
-        # Evaluate the expression (e.g. 'old * 19'), setting `old` to the
-        # value of `worry`
+        # UNSAFE - Evaluate the expression (e.g. 'old * 19'), setting `old` to
+        # the value of `worry`
         new_worry = eval(self.operation, {'__builtins__': None}, {'old': worry})
 
         # For part 1, divide the new worry by the 'relief factor'
