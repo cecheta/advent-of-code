@@ -32,11 +32,16 @@ def part_one(input: str):
         # Turn the left string into a set, so characters can be found immediately
         left_set = set(list(left))
 
+        duplicate = ''
+
         for char in right:
             if char in left_set:
                 # If the character from the right half is present in the left set, it is a duplicate
                 duplicate = char
                 break
+
+        if duplicate == '':
+            raise Exception('Duplicate not found')
 
         total += get_priority(duplicate)
 

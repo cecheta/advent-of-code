@@ -41,6 +41,7 @@ def part_one(input: str):
     for move in moves_list:
         # Parse the numbers as integers from the moves list
         matches = re.search(r'move (\d+) from (\d+) to (\d+)', move)
+        assert matches is not None
         amount, from_index, to_index = map(int, matches.groups())
 
         # Moves list is 1-indexed, but `stacks` is 0-indexed
@@ -69,6 +70,7 @@ def part_two(input: str):
     for move in moves_list:
         # Parse the numbers as integers from the moves list
         matches = re.search(r'move (\d+) from (\d+) to (\d+)', move)
+        assert matches is not None
         amount, from_index, to_index = map(int, matches.groups())
 
         # Moves list is 1-indexed, but `stacks` is 0-indexed
