@@ -13,9 +13,7 @@ class Monkey:
     false: int
 
     def __init__(self, text: str):
-        """
-        Extract all values from the input, and set the instance variables
-        """
+        """Extract all values from the input, and set the instance variables"""
         match = re.search(r'''^Monkey (\d+):
   Starting items: (.*)
   Operation: new = (.*)
@@ -49,15 +47,11 @@ class Monkey:
         self.false = int(groups[5])
 
     def add_item(self, item: int):
-        """
-        Add an item to the monkey's list of items
-        """
+        """Add an item to the monkey's list of items"""
         self.items.append(item)
 
     def reset_items(self):
-        """
-        Remove all the items from the monkey
-        """
+        """Remove all the items from the monkey"""
         self.items.clear()
 
     def next(self, worry: int, mod: Optional[int] = None, relief: Optional[int] = None) -> tuple[int, int]:

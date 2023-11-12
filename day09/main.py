@@ -2,9 +2,7 @@ import math
 
 
 def get_length(x: int, y: int) -> float:
-    """
-    Returns the length of a vector from the origin
-    """
+    """Returns the length of a vector from the origin"""
     return math.sqrt(x ** 2 + y ** 2)
 
 
