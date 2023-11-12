@@ -26,16 +26,17 @@ def part_one(input: str):
     # queue - list containing next squares to visit
     # seen - set of coordinates of squares that we've already visited, starting
     #   from the start square
-    queue: list[tuple[int, int, int]] = [(start[0], start[1], 0)]
+    queue = [(start[0], start[1])]
     seen = {start}
 
     result = -1
+    i = 0
 
     while queue:
-        new_queue: list[tuple[int, int, int]] = []
+        new_queue: list[tuple[int, int]] = []
 
-        # Obtain coordinates of current square, as well as iteration number
-        for x, y, i in queue:
+        # Obtain coordinates of current square
+        for x, y in queue:
             # If we are at the end square, then return the iteration number
             if (x, y) == end:
                 result = i
@@ -60,14 +61,14 @@ def part_one(input: str):
                         # ...then add the square into the `seen` set...
                         seen.add((a, b))
 
-                        # ...and add it to the queue (to visit later), incrementing
-                        # the iteration number
-                        new_queue.append((a, b, i + 1))
+                        # ...and add it to the queue, to visit on the next iteration
+                        new_queue.append((a, b,))
 
         else:
-            # If we didn't break out of the loop, then reset the queue
-            # and continue
+            # If we didn't break out of the loop, then reset the queue,
+            # increment the counter and continue
             queue = new_queue
+            i += 1
             continue
 
         # Otherwise, we have found the result
@@ -92,16 +93,17 @@ def part_two(input: str):
     # queue - list containing next squares to visit
     # seen - set of coordinates of squares that we've already visited, starting
     #   from the end square
-    queue: list[tuple[int, int, int]] = [(end[0], end[1], 0)]
+    queue = [(end[0], end[1])]
     seen = {end}
 
     result = -1
+    i = 0
 
     while queue:
-        new_queue: list[tuple[int, int, int]] = []
+        new_queue: list[tuple[int, int]] = []
 
-        # Obtain coordinates of current square, as well as iteration number
-        for x, y, i in queue:
+        # Obtain coordinates of current square
+        for x, y in queue:
             # Obtain the height of the current square
             height = grid[x][y]
 
@@ -126,14 +128,14 @@ def part_two(input: str):
                         # ...then add the square into the `seen` set...
                         seen.add((a, b))
 
-                        # ...and add it to the queue (to visit later), incrementing
-                        # the iteration number
-                        new_queue.append((a, b, i + 1))
+                        # ...and add it to the queue, to visit on the next iteration
+                        new_queue.append((a, b))
 
         else:
-            # If we didn't break out of the loop, then reset the queue
-            # and continue
+            # If we didn't break out of the loop, then reset the queue,
+            # increment the counter and continue
             queue = new_queue
+            i += 1
             continue
 
         # Otherwise, we have found the result
