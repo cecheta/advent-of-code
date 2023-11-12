@@ -42,7 +42,7 @@ def part_two(input: str):
     print(result)
 
 
-def part_twoHeap(input: str):
+def part_two_heap(input: str):
     # Remove trailing whitespace from file, then split at each double new line
     array = input.strip('\n').split('\n\n')
 
@@ -72,4 +72,4 @@ with open('input.txt') as f:
 
 part_one(input)
 part_two(input)
-part_twoHeap(input)
+part_two_heap(input)
