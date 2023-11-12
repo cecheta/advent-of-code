@@ -1,7 +1,7 @@
 import heapq
 
 
-def partOne(input: str):
+def part_one(input: str):
     # Remove trailing whitespace from file, then split at each double new line
     array = input.strip('\n').split('\n\n')
 
@@ -19,7 +19,7 @@ def partOne(input: str):
     print(maximum)
 
 
-def partTwo(input: str):
+def part_two(input: str):
     # Remove trailing whitespace from file, then split at each double new line
     array = input.strip('\n').split('\n\n')
 
@@ -42,7 +42,7 @@ def partTwo(input: str):
     print(result)
 
 
-def partTwoHeap(input: str):
+def part_twoHeap(input: str):
     # Remove trailing whitespace from file, then split at each double new line
     array = input.strip('\n').split('\n\n')
 
@@ -70,6 +70,6 @@ def partTwoHeap(input: str):
 with open('input.txt') as f:
     input = f.read()
 
-partOne(input)
-partTwo(input)
-partTwoHeap(input)
+part_one(input)
+part_two(input)
+part_twoHeap(input)

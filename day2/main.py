@@ -1,4 +1,4 @@
-def partOne(input: str):
+def part_one(input: str):
     """
     A, X - Rock
     B, Y - Paper
@@ -52,7 +52,7 @@ def partOne(input: str):
     print(final_score)
 
 
-def partTwo(input: str):
+def part_two(input: str):
     """
     A - Rock
     B - Paper
@@ -110,5 +110,5 @@ def partTwo(input: str):
 with open('input.txt') as f:
     input = f.read()
 
-partOne(input)
-partTwo(input)
+part_one(input)
+part_two(input)

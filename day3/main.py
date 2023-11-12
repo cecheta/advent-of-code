@@ -1,4 +1,4 @@
-def getPriority(letter: str) -> int:
+def get_priority(letter: str) -> int:
     """
     Function to obtain priority of a letter
     ord() is used to obtain ascii value
@@ -18,7 +18,7 @@ def getPriority(letter: str) -> int:
     return ord(letter) - 38
 
 
-def partOne(input: str):
+def part_one(input: str):
     array = input.splitlines()
 
     total = 0
@@ -38,12 +38,12 @@ def partOne(input: str):
                 duplicate = char
                 break
 
-        total += getPriority(duplicate)
+        total += get_priority(duplicate)
 
     print(total)
 
 
-def partTwo(input: str):
+def part_two(input: str):
     array = input.splitlines()
 
     total = 0
@@ -58,7 +58,7 @@ def partTwo(input: str):
         for char in one:
             if char in set_two and char in set_three:
                 # If the character is present in all three, add its priority
-                total += getPriority(char)
+                total += get_priority(char)
                 break
 
     print(total)
@@ -67,5 +67,5 @@ def partTwo(input: str):
 with open('input.txt') as f:
     input = f.read()
 
-partOne(input)
-partTwo(input)
+part_one(input)
+part_two(input)

@@ -1,4 +1,4 @@
-def partOne(input: str):
+def part_one(input: str):
     array = input.splitlines()
 
     total = 0
@@ -21,7 +21,7 @@ def partOne(input: str):
     print(total)
 
 
-def partTwo(input: str):
+def part_two(input: str):
     array = input.splitlines()
 
     total = 0
@@ -47,5 +47,5 @@ def partTwo(input: str):
 with open('input.txt') as f:
     input = f.read()
 
-partOne(input)
-partTwo(input)
+part_one(input)
+part_two(input)
