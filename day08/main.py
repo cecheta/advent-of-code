@@ -22,7 +22,7 @@ def part_one(input: str):
         # If we haven't seen this tree before, and it is larger than the maximum we've seen so far,
         # then we need to count it
         if (i, j) not in seen and tree > maximum:
-            # Add the co-ordinates to `seen` so we don't double-count it in a later iteration
+            # Add the coordinates to `seen` so we don't double-count it in a later iteration
             seen.add((i, j))
             return 1
 
