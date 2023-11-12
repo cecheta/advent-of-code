@@ -1,6 +1,3 @@
-from collections import deque
-
-
 def find_letter(grid: list[list[str]], letter: str) -> tuple[int, int]:
     """
     Function to find the coordinates of a letter in the grid
@@ -26,45 +23,55 @@ def part_one(input: str):
     grid[end[0]][end[1]] = 'z'
 
     # Breadth-first search
-    # queue - (doubly linked) list containing next squares to visit
+    # queue - list containing next squares to visit
     # seen - set of coordinates of squares that we've already visited, starting
     #   from the start square
-    queue: deque[tuple[int, int, int]] = deque([(start[0], start[1], 0)])
+    queue: list[tuple[int, int, int]] = [(start[0], start[1], 0)]
     seen = {start}
 
     result = -1
 
     while queue:
+        new_queue: list[tuple[int, int, int]] = []
+
         # Obtain coordinates of current square, as well as iteration number
-        x, y, i = queue.popleft()
+        for x, y, i in queue:
+            # If we are at the end square, then return the iteration number
+            if (x, y) == end:
+                result = i
+                break
 
-        # If we are at the end square, then return the iteration number
-        if (x, y) == end:
-            result = i
-            break
+            # Obtain the height (letter) of the current square
+            height = grid[x][y]
 
-        # Obtain the height (letter) of the current square
-        height = grid[x][y]
+            # Iterate in all adjacent directions
+            for X, Y in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+                a, b = x + X, y + Y
 
-        # Iterate in all adjacent directions
-        for X, Y in ((0, 1), (1, 0), (0, -1), (-1, 0)):
-            a, b = x + X, y + Y
+                # If the adjacent square is within the grid, and we haven't visited
+                # this square before...
+                if 0 <= a < len(grid) and 0 <= b < len(grid[0]) and (a, b) not in seen:
+                    # ...then find the height of this adjacent square
+                    next_height = grid[a][b]
 
-            # If the adjacent square is within the grid, and we haven't visited
-            # this square before...
-            if 0 <= a < len(grid) and 0 <= b < len(grid[0]) and (a, b) not in seen:
-                # ...then find the height of this adjacent square
-                next_height = grid[a][b]
+                    # If the adjacent square is at most one level higher than the
+                    # current square...
+                    if ord(next_height) - ord(height) <= 1:
+                        # ...then add the square into the `seen` set...
+                        seen.add((a, b))
 
-                # If the adjacent square is at most one level higher than the
-                # current square...
-                if ord(next_height) - ord(height) <= 1:
-                    # ...then add the square into the `seen` set...
-                    seen.add((a, b))
+                        # ...and add it to the queue (to visit later), incrementing
+                        # the iteration number
+                        new_queue.append((a, b, i + 1))
 
-                    # ...and add it to the queue (to visit later), incrementing
-                    # the iteration number
-                    queue.append((a, b, i + 1))
+        else:
+            # If we didn't break out of the loop, then reset the queue
+            # and continue
+            queue = new_queue
+            continue
+
+        # Otherwise, we have found the result
+        break
 
     print(result)
 
@@ -82,45 +89,55 @@ def part_two(input: str):
     grid[end[0]][end[1]] = 'z'
 
     # Breadth-first search
-    # queue - (doubly linked) list containing next squares to visit
+    # queue - list containing next squares to visit
     # seen - set of coordinates of squares that we've already visited, starting
     #   from the end square
-    queue: deque[tuple[int, int, int]] = deque([(end[0], end[1], 0)])
+    queue: list[tuple[int, int, int]] = [(end[0], end[1], 0)]
     seen = {end}
 
     result = -1
 
     while queue:
+        new_queue: list[tuple[int, int, int]] = []
+
         # Obtain coordinates of current square, as well as iteration number
-        x, y, i = queue.popleft()
+        for x, y, i in queue:
+            # Obtain the height of the current square
+            height = grid[x][y]
 
-        # Obtain the height of the current square
-        height = grid[x][y]
+            # If the height is 'a', then return the iteration number
+            if height == 'a':
+                result = i
+                break
 
-        # If the height is 'a', then return the iteration number
-        if height == 'a':
-            result = i
-            break
+            # Iterate in all adjacent directions
+            for X, Y in ((0, 1), (1, 0), (0, -1), (-1, 0)):
+                a, b = x + X, y + Y
 
-        # Iterate in all adjacent directions
-        for X, Y in ((0, 1), (1, 0), (0, -1), (-1, 0)):
-            a, b = x + X, y + Y
+                # If the adjacent square is within the grid, and we haven't visited
+                # this square before...
+                if 0 <= a < len(grid) and 0 <= b < len(grid[0]) and (a, b) not in seen:
+                    # ...then find the height of this adjacent square
+                    next_height = grid[a][b]
 
-            # If the adjacent square is within the grid, and we haven't visited
-            # this square before...
-            if 0 <= a < len(grid) and 0 <= b < len(grid[0]) and (a, b) not in seen:
-                # ...then find the height of this adjacent square
-                next_height = grid[a][b]
+                    # If the current square is at most one level higher than the
+                    # adjacent square...
+                    if ord(height) - ord(next_height) <= 1:
+                        # ...then add the square into the `seen` set...
+                        seen.add((a, b))
 
-                # If the current square is at most one level higher than the
-                # adjacent square...
-                if ord(height) - ord(next_height) <= 1:
-                    # ...then add the square into the `seen` set...
-                    seen.add((a, b))
+                        # ...and add it to the queue (to visit later), incrementing
+                        # the iteration number
+                        new_queue.append((a, b, i + 1))
 
-                    # ...and add it to the queue (to visit later), incrementing
-                    # the iteration number
-                    queue.append((a, b, i + 1))
+        else:
+            # If we didn't break out of the loop, then reset the queue
+            # and continue
+            queue = new_queue
+            continue
+
+        # Otherwise, we have found the result
+        break
 
     print(result)
 
