@@ -1,4 +1,4 @@
-def draw_grid(input: str, extra=0) -> tuple[list[list[str]], int]:
+def draw_grid(input: str, extra=0) -> tuple[list[list[str]], tuple[int, int]]:
     """Function to create initial grid of rocks and air"""
     input_array = input.splitlines()
 
@@ -41,15 +41,15 @@ def draw_grid(input: str, extra=0) -> tuple[list[list[str]], int]:
             for j in range(min(y1, y2), max(y1, y2) + 1):
                 grid[x1 - offset][j] = '#'
 
-    return (grid, offset)
+    # Obtain the coordinate of the sand entry point
+    start = (500 - offset, 0)
+
+    return (grid, start)
 
 
 def part_one(input: str):
     # Create the grid
-    grid, offset = draw_grid(input)
-
-    # Obtain the coordinate of the sand entry point
-    start = (500 - offset, 0)
+    grid, start = draw_grid(input)
 
     count = 0
     result = None
@@ -87,14 +87,11 @@ def part_one(input: str):
 
 def part_two(input: str):
     # Add two extra rows when drawing the grid
-    grid, offset = draw_grid(input, extra=2)
+    grid, start = draw_grid(input, extra=2)
 
     # Fill the bottom row with rocks
     for row in grid:
         row[-1] = '#'
-
-    # Obtain the coordinate of the sand entry point
-    start = (500 - offset, 0)
 
     result = 0
 
