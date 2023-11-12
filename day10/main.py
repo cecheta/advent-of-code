@@ -4,7 +4,6 @@ def part_one(input: str):
     # Initialise variables
     total = 0
     X = cycle = 1
-    next_cycle = 20
 
     for move in moves:
         line = move.split(' ')
@@ -15,9 +14,8 @@ def part_one(input: str):
 
         # If this is an "interesting cycle", calculate the signal strength and
         # add it to the running total
-        if cycle == next_cycle:
-            total += next_cycle * X
-            next_cycle += 40
+        if cycle % 40 == 20:
+            total += cycle * X
 
         # If the operation is 'addx', then add the value to `X`, and increment
         # the current cycle
@@ -26,9 +24,8 @@ def part_one(input: str):
             X += int(line[1])
 
             # Check again for "interesting cycle"
-            if cycle == next_cycle:
-                total += next_cycle * X
-                next_cycle += 40
+            if cycle % 40 == 20:
+                total += cycle * X
 
     print(total)
 
