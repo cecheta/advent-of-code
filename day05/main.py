@@ -4,8 +4,8 @@ import re
 def get_stacks(diagram: str) -> list[list[str]]:
     lines = diagram.splitlines()
 
-    # We can get the number of stacks from the line length (due to trailing whitespace on each line)
-    line_length = len(lines[0])
+    # We can get the number of stacks from the longest line length
+    line_length = max(len(line) for line in lines)
     num_of_stacks = (line_length + 1) // 4
 
     # Create empty stacks
@@ -20,7 +20,7 @@ def get_stacks(diagram: str) -> list[list[str]]:
             continue
 
         # The character can always be found at index 1, in groups of 4 (e.g. 1, 5, 9, ...)
-        for i in range(1, line_length, 4):
+        for i in range(1, len(line), 4):
             char = line[i]
             index = i // 4
 
