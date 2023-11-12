@@ -136,9 +136,92 @@ def part_two(input: str):
     print(result)
 
 
+def part_two_optimised(input: str):
+    """
+    This solution runs significantly faster than `part_two()`, by keeping track
+    of each diagonal line 1 space away from a sensor's circumference (top-left,
+    top-right, bottom-left, bottom-right), and looks for an intersection point
+    of two perpendicular lines which is one space away from a (different)
+    sensor's circumference in the four diagonal directions.
+    """
+    input_array = input.splitlines()
+
+    LIMIT = 4000000
+
+    negatives_top: dict[int, list[tuple[tuple[int, int], tuple[int, int]]]] = {}
+    positives_top: dict[int, list[tuple[tuple[int, int], tuple[int, int]]]] = {}
+    negatives_bottom: dict[int, list[tuple[tuple[int, int], tuple[int, int]]]] = {}
+    positives_bottom: dict[int, list[tuple[tuple[int, int], tuple[int, int]]]] = {}
+
+    for line in input_array:
+        match = re.match(r'Sensor at x=(-?\d+), y=(-?\d+): closest beacon is at x=(-?\d+), y=(-?\d+)', line)
+        assert match
+
+        x1, y1, x2, y2 = map(int, match.groups())
+
+        distance = abs(x2 - x1) + abs(y2 - y1)
+
+        l, r, t, b = (x1 - distance, y1), (x1 + distance, y1), (x1, y1 + distance), (x1, y1 - distance)
+
+        negatives_top.setdefault(t[0] + t[1] + 1, []).append(((t[0] + 1, t[1]), (r[0], r[1] + 1)))
+        negatives_bottom.setdefault(b[0] + b[1] - 1, []).append(((l[0], l[1] - 1), (b[0] - 1, b[1])))
+        positives_top.setdefault(t[1] - t[0] + 1, []).append(((l[0], l[1] + 1), (t[0] - 1, t[1])))
+        positives_bottom.setdefault(b[1] - b[0] - 1, []).append(((b[0] + 1, b[1]), (r[0], r[1] - 1)))
+
+    negatives_top = {k: v for k, v in negatives_top.items() if k in negatives_bottom}
+    positives_top = {k: v for k, v in positives_top.items() if k in positives_bottom}
+    negatives_bottom = {k: v for k, v in negatives_bottom.items() if k in negatives_top}
+    positives_bottom = {k: v for k, v in positives_bottom.items() if k in positives_top}
+
+    coordinates: Optional[tuple[int, int]] = None
+
+    for c1 in negatives_top:
+        if coordinates:
+            break
+
+        for c2 in positives_top:
+            intersection = (c1 - c2) // 2, (c1 + c2) // 2
+
+            if not (0 <= intersection[0] <= LIMIT and 0 <= intersection[1] <= LIMIT):
+                continue
+
+            for interval in negatives_top[c1]:
+                if interval[0][0] <= intersection[0] <= interval[1][0] and interval[0][1] >= intersection[1] >= interval[1][1]:
+                    break
+            else:
+                continue
+
+            for interval in negatives_bottom[c1]:
+                if interval[0][0] <= intersection[0] <= interval[1][0] and interval[0][1] >= intersection[1] >= interval[1][1]:
+                    break
+            else:
+                continue
+
+            for interval in positives_top[c2]:
+                if interval[0][0] <= intersection[0] <= interval[1][0] and interval[0][1] <= intersection[1] <= interval[1][1]:
+                    break
+            else:
+                continue
+
+            for interval in positives_bottom[c2]:
+                if interval[0][0] <= intersection[0] <= interval[1][0] and interval[0][1] <= intersection[1] <= interval[1][1]:
+                    break
+            else:
+                continue
+
+            coordinates = intersection
+            break
+
+    assert coordinates
+
+    result = coordinates[0] * 4000000 + coordinates[1]
+    print(result)
+
+
 with open('input.txt') as f:
     input = f.read()
 
 
 part_one(input)
-part_two(input)
+# part_two(input)
+part_two_optimised(input)
