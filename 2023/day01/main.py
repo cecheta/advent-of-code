@@ -30,16 +30,16 @@ def part_two(puzzle_input: str) -> None:
     array = puzzle_input.strip().splitlines()
 
     numbers = {
-        'zero': '0',
-        'one': '1',
-        'two': '2',
-        'three': '3',
-        'four': '4',
-        'five': '5',
-        'six': '6',
-        'seven': '7',
-        'eight': '8',
-        'nine': '9'
+        "zero": "0",
+        "one": "1",
+        "two": "2",
+        "three": "3",
+        "four": "4",
+        "five": "5",
+        "six": "6",
+        "seven": "7",
+        "eight": "8",
+        "nine": "9",
     }
 
     result = 0
@@ -56,7 +56,7 @@ def part_two(puzzle_input: str) -> None:
             # If not, check to see whether a 3, 4 or 5-letter word spells a number,
             # by checking for the word in the `numbers` dict
             for n in range(3, 6):
-                word = line[i:i + n]
+                word = line[i : i + n]
 
                 if word in numbers:
                     # Get the value of the number from the dict
@@ -80,7 +80,7 @@ def part_two(puzzle_input: str) -> None:
             for n in range(3, 6):
                 # Take `word` from the original character sequence `line`, which
                 # is in the correct order
-                word = line[len(line) - i - n:len(line) - i]
+                word = line[len(line) - i - n : len(line) - i]
 
                 if word in numbers:
                     num2 = numbers[word]
@@ -97,7 +97,8 @@ def part_two(puzzle_input: str) -> None:
 
     print(result)
 
-with open('input.txt') as f:
+
+with open("input.txt") as f:
     puzzle_input = f.read()
 
 part_one(puzzle_input)
