@@ -15,6 +15,8 @@ def part_one(puzzle_input: str) -> None:
     for line in array:
         # Extract the game ID and the game results
         match = re.search(r"^Game (\d+): (.*)$", line)
+        assert match is not None
+
         id = int(match.group(1))
         game = match.group(2)
 
@@ -47,6 +49,8 @@ def part_two(puzzle_input: str) -> None:
 
     for line in array:
         match = re.search(r"^Game (\d+): (.*)$", line)
+        assert match is not None
+        
         id = int(match.group(1))
         game = match.group(2)
 
