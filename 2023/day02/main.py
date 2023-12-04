@@ -1,3 +1,4 @@
+import os
 import re
 
 
@@ -77,7 +78,7 @@ def part_two(puzzle_input: str) -> None:
     print(result)
 
 
-with open("input.txt") as f:
+with open(os.path.join(os.path.dirname(__file__), "input.txt")) as f:
     puzzle_input = f.read()
 
 part_one(puzzle_input)
