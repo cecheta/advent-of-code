@@ -249,7 +249,16 @@ def part_two(puzzle_input: str) -> None:
     # `pairs` is a dict to help know if we are crossing the boundary when encountering
     # either "L" or "F". For example, pairs["L"]["7"] is True, therefore if we
     # encounter a "L" followed by a "7", then we will cross the boundary.
-    pairs = {"L": {"J": False, "7": True}, "F": {"J": True, "7": False}}
+    pairs = {
+        "L": {
+            "J": False,
+            "7": True,
+        },
+        "F": {
+            "J": True,
+            "7": False,
+        },
+    }
 
     # Boolean to know whether we are currently inside of the loop or not
     inside = False
