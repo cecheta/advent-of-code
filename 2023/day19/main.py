@@ -174,15 +174,14 @@ def part_two(puzzle_input: str) -> None:
                     new_ratings = ratings.copy()
                     new_upper = threshold + 1
 
-                    if new_upper != upper:
-                        # In this half, the expression is true, therefore move
-                        # to the next workflow
-                        new_ratings[rating] = (new_upper, upper)
-                        queue.append((new_ratings, next_name))
-                    if lower != threshold:
-                        # In this half, the expression is false, therefore move
-                        # to the next instruction
-                        ratings[rating] = (lower, threshold)
+                    # In this half, the expression is true, therefore move
+                    # to the next workflow
+                    new_ratings[rating] = (new_upper, upper)
+                    queue.append((new_ratings, next_name))
+
+                    # In this half, the expression is false, therefore move
+                    # to the next instruction
+                    ratings[rating] = (lower, threshold)
 
             # This is the same as above, but the reverse (<)
             else:
@@ -194,11 +193,11 @@ def part_two(puzzle_input: str) -> None:
                 else:
                     new_ratings = ratings.copy()
                     new_upper = threshold - 1
-                    if new_upper != lower:
-                        new_ratings[rating] = (lower, new_upper)
-                        queue.append((new_ratings, next_name))
-                    if upper != threshold:
-                        ratings[rating] = (threshold, upper)
+
+                    new_ratings[rating] = (lower, new_upper)
+                    queue.append((new_ratings, next_name))
+
+                    ratings[rating] = (threshold, upper)
 
         else:
             # If we have gone through all the instructions, then move to the
